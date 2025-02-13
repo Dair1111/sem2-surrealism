@@ -6,16 +6,25 @@
     <style>
         body {
             font-family: "Courier New", monospace;
-            font-size: 3em;
+            font-size: 2.5em;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: rgb(110, 26, 26);
             color: white;
-            text-align: center;
             padding: 20px;
         }
+        .chaotic-text {
+    max-width: 80%; /* Ensures text does not stretch fully across the screen */
+    word-wrap: break-word; /* Allows words to wrap but doesn't force breaks */
+    overflow-wrap: break-word; /* Helps with word wrapping */
+    word-break: normal; /* Prevents breaking words in the middle */
+    hyphens: none; /* Ensures no automatic hyphenation */
+    padding: 20px; /* Adds space around the text */
+    text-align: left;
+    line-height: 1.2;
+}
 
         .chaotic-text span {
             display: inline-block;
@@ -57,7 +66,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const textElement = document.querySelector(".chaotic-text");
-            const text = "It is not the fear of madness which will oblige us to leave the flag of imagination furled.";
+            const text = "“The bear of the caves and his friend the bittern, the vol-au-vent and his valet the wind, the Lord Chancellor with his Lady, the scarecrow for sparrows and his accomplice the sparrow, the test tube and his daughter the needle, this carnivore and his brother the carnival, the sweeper and his monocle, the Mississippi and its little dog, the coral and its jug of milk, the Miracle and its Good Lord, might just as well go and disappear from the surface of the sea.”";
             
             textElement.innerHTML = text.split("").map(letter => {
                 if (letter === " ") {

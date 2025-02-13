@@ -40,10 +40,16 @@
         }
 
         .text-container {
-            position: relative;
-            cursor: pointer;
-            z-index: 1; /* text above background!!!!!!!!!*/
-        }
+             position: relative;
+             cursor: pointer;
+             z-index: 1;
+             font-size: 2em; /* Increase font size */
+             max-width: 80%; /* Prevent text from stretching across the full width */
+             word-wrap: break-word; /* Ensures words don't break in the middle */
+             overflow-wrap: break-word;
+             padding: 20px; /* Adds space around the text */
+             text-align: center; /* Keeps text centered */
+            }
 
         .text-container span {
             display: inline-block;
