@@ -13,7 +13,6 @@
 
         body {
             font-family: "Courier New", monospace;
-            font-size: 1.5em;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,8 +21,8 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
-            color: black; 
-            background-color: white; 
+            color: rgb(255, 255, 255); 
+            background-color: rgb(189, 115, 133); 
         }
 
 
@@ -43,12 +42,13 @@
              position: relative;
              cursor: pointer;
              z-index: 1;
-             font-size: 2em; /* Increase font size */
-             max-width: 80%; /* Prevent text from stretching across the full width */
-             word-wrap: break-word; /* Ensures words don't break in the middle */
+             font-size: 2em;
+             max-width: 75%; 
+             word-wrap: break-word; 
              overflow-wrap: break-word;
-             padding: 20px; /* Adds space around the text */
-             text-align: center; /* Keeps text centered */
+             padding: 20px; 
+             text-align: center;
+             line-height: 1.4;
             }
 
         .text-container span {
