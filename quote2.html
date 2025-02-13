@@ -3,37 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Falling Letters Effect</title>
+    <title>Hover Drop Effect</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
+            font-family: "Courier New", monospace;
+            font-size: 1.5em;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(to bottom, #d9e6f2, #f7d4e3);
-            font-family: "Courier New", monospace;
-            
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+            color: black; 
+            background-color: white; 
+        }
+
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('15.jpg') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.4;
+            z-index: -1; 
         }
 
         .text-container {
             position: relative;
-            font-size: 18px;
-            font-weight: bold;
             cursor: pointer;
+            z-index: 1; /* text above background!!!!!!!!!*/
         }
 
         .text-container span {
             display: inline-block;
-            transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+            transition: transform 1s ease-out, opacity 1s ease-out;
+            position: relative;
+            white-space: pre;
         }
 
         .text-container span.drop {
-            transform: translateY(100px) rotate(20deg);
-            opacity: 0;
+            animation: fall 1s ease-out forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100px) rotate(20deg);
+                opacity: 0;
+            }
+        }
+
+        .text-container span.chaos {
+            animation: chaosMove 1.5s ease-in-out forwards;
+        }
+
+        @keyframes chaosMove {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(calc(50vw * (Math.random() - 0.5)), calc(50vh * (Math.random() - 0.5))) rotate(360deg);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(120px) rotate(720deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
+
+    <div class="background"></div>
 
     <div class="text-container" id="text">
         It is not the fear of madness which will oblige us to leave the flag of imagination furled.
@@ -43,33 +99,30 @@
         document.addEventListener("DOMContentLoaded", () => {
             const textContainer = document.getElementById("text");
             const text = textContainer.innerText;
-            textContainer.innerHTML = ""; // Clear text to replace with spans
+            textContainer.innerHTML = ""; 
 
-            // Wrap each letter in a span
             text.split("").forEach((char, index) => {
                 let span = document.createElement("span");
                 span.innerText = char;
-                span.style.transitionDelay = `${index * 0.03}s`; // Creates a cascading effect
+                span.style.transitionDelay = `${index * 0.05}s`;
                 textContainer.appendChild(span);
             });
 
-            // Hover event
-            textContainer.addEventListener("mouseenter", () => {
-                textContainer.querySelectorAll("span").forEach(span => {
-                    span.classList.add("drop");
-                });
-            });
-
-            // Reset when mouse leaves
-            textContainer.addEventListener("mouseleave", () => {
-                textContainer.querySelectorAll("span").forEach(span => {
+            textContainer.addEventListener("mouseover", (event) => {
+                if (event.target.tagName === "SPAN") {
+                    if (Math.random() > 0.5) {
+                        event.target.classList.add("drop");
+                    } else {
+                        event.target.classList.add("chaos");
+                    }
+                    
                     setTimeout(() => {
-                        span.classList.remove("drop");
-                    }, 500); // Delay reset so animation is noticeable
-                });
+                        event.target.classList.remove("drop");
+                        event.target.classList.remove("chaos");
+                    }, 2000);
+                }
             });
         });
     </script>
 
 </body>
-</html>

@@ -1,73 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hover Drop Effect</title>
+    <title>Chaotic Hover Effect</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: "Courier New", monospace;
-            font-size: 1.5em;
+            font-size: 3em;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: rgb(110, 26, 26);
+            color: white;
             text-align: center;
             padding: 20px;
-            overflow: hidden;
-            position: relative;
-            color: black; 
-            background-color: white; 
         }
 
-
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('15.jpg') no-repeat center center fixed;
-            background-size: cover;
-            opacity: 0.4;
-            z-index: -1; 
-        }
-
-        .text-container {
-            position: relative;
-            cursor: pointer;
-            z-index: 1; /* text above background!!!!!!!!!*/
-        }
-
-        .text-container span {
+        .chaotic-text span {
             display: inline-block;
             transition: transform 1s ease-out, opacity 1s ease-out;
             position: relative;
+            cursor: pointer;
             white-space: pre;
         }
 
-        .text-container span.drop {
-            animation: fall 1s ease-out forwards;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100px) rotate(20deg);
-                opacity: 0;
-            }
-        }
-
-        .text-container span.chaos {
+        .chaotic-text span.chaos {
             animation: chaosMove 1.5s ease-in-out forwards;
         }
 
@@ -76,53 +34,52 @@
                 transform: translate(0, 0);
                 opacity: 1;
             }
-            50% {
-                transform: translate(calc(50vw * (Math.random() - 0.5)), calc(50vh * (Math.random() - 0.5))) rotate(360deg);
-                opacity: 0.5;
+            30% {
+                transform: translate(calc(50vw * (Math.random() - 0.5)), calc(50vh * (Math.random() - 0.5))) rotate(720deg);
+                opacity: 0.2;
             }
-            100% {
-                transform: translateY(120px) rotate(720deg);
+            60% {
+                transform: translate(calc(-50vw * (Math.random() - 0.5)), calc(-50vh * (Math.random() - 0.5))) rotate(-720deg);
                 opacity: 0;
             }
+            100% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
         }
+
     </style>
 </head>
 <body>
 
-    <div class="background"></div>
-
-    <div class="text-container" id="text">
-        It is not the fear of madness which will oblige us to leave the flag of imagination furled.
-    </div>
+    <p class="chaotic-text"></p>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const textContainer = document.getElementById("text");
-            const text = textContainer.innerText;
-            textContainer.innerHTML = ""; 
-
-            text.split("").forEach((char, index) => {
-                let span = document.createElement("span");
-                span.innerText = char;
-                span.style.transitionDelay = `${index * 0.05}s`;
-                textContainer.appendChild(span);
-            });
-
-            textContainer.addEventListener("mouseover", (event) => {
-                if (event.target.tagName === "SPAN") {
-                    if (Math.random() > 0.5) {
-                        event.target.classList.add("drop");
-                    } else {
-                        event.target.classList.add("chaos");
-                    }
-                    
-                    setTimeout(() => {
-                        event.target.classList.remove("drop");
-                        event.target.classList.remove("chaos");
-                    }, 2000);
+            const textElement = document.querySelector(".chaotic-text");
+            const text = "It is not the fear of madness which will oblige us to leave the flag of imagination furled.";
+            
+            textElement.innerHTML = text.split("").map(letter => {
+                if (letter === " ") {
+                    return `<span>&nbsp;</span>`;  // Keeps spaces between words
                 }
+                return `<span>${letter}</span>`;
+            }).join("");
+
+            const letters = document.querySelectorAll(".chaotic-text span");
+
+            letters.forEach(letter => {
+                letter.addEventListener("mouseover", () => {
+                    if (Math.random() > 0.5) {
+                        letter.classList.add("chaos");
+                        setTimeout(() => letter.classList.remove("chaos"), 2000);
+                    } else {
+                        letter.style.opacity = "0";
+                        setTimeout(() => letter.style.opacity = "1", 2000);
+                    }
+                });
             });
         });
     </script>
-
 </body>
+</html>
