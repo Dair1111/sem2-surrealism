@@ -13,7 +13,7 @@ function preload() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    textSize(18);
+    textSize(24);
     textAlign(LEFT, CENTER); // Align text to the left for better spacing
     textFont("Courier New");
 
@@ -27,7 +27,7 @@ function setup() {
     let x = padding;
     let y = 100; // Vertical position of the quote
     let spacing = 12; // Letter spacing
-    let lineHeight = 25; // Space between lines
+    let lineHeight = 35; // Space between lines
 
     for (let i = 0; i < words.length; i++) {
         let wordWidth = textWidth(words[i] + " ");
@@ -87,6 +87,23 @@ function draw() {
         letters[i].update();
         letters[i].display();
     }
+
+    // Draw and update letters
+for (let i = letters.length - 1; i >= 0; i--) {
+    letters[i].update();
+    letters[i].display();
+
+    // Calculate the umbrella's top Y position
+    let umbrellaTop = umbrellaY + 50; // Adjust this value based on umbrella size
+
+    // Check if the letter is touching the umbrella
+    if (letters[i].y >= umbrellaTop &&  // Letter is at or below umbrella
+        letters[i].x >= umbrellaX - 250 &&  // Letter is within left edge
+        letters[i].x <= umbrellaX + 250) { // Letter is within right edge
+        letters.splice(i, 1); // Remove the letter
+    }
+}
+    
 }
 
 function mousePressed() {
@@ -107,7 +124,7 @@ class Letter {
         this.y = y;
         this.originalY = y; // Store the original position
         this.letter = letter;
-        this.speed = random(5, 10); // how fast letters fall
+        this.speed = random(2, 10); // letter fall speed
         this.falling = false; // Initially not falling
     }
 
@@ -118,7 +135,7 @@ class Letter {
     }
 
     display() {
-        fill(0);
+        fill(207, 186, 176); // font color
         text(this.letter, this.x, this.y);
     }
 }
