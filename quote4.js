@@ -1,10 +1,12 @@
 let letters = [];
 let quote = "I would like to sleep, in order to surrender myself to the dreamers, the way I surrender myself to those who read me with eyes wide open; in order to stop imposing, in this realm, the conscious rhythm of my thought.";
 let umbrella;
-let isRaining = false;
+let isRaining = false; // Tracks if rain has started
 let bgImage;
 let umbrellaY;
 let umbrellaX;
+let dragging = false; // Tracks if umbrella is being dragged
+let offsetX, offsetY; // Mouse offset when dragging
 
 function preload() {
     bgImage = loadImage("ben1.jpg");
@@ -14,43 +16,38 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
     textSize(24);
-    textAlign(LEFT, CENTER); // Align text to the left for better spacing
+    textAlign(LEFT, CENTER);
     textFont("Courier New");
 
     umbrellaX = width / 2;
-    umbrellaY = height - 100; // Initial position
+    umbrellaY = height - 170; // unbrella Initial position
 
-    let quoteWidth = width * 0.75; // Quote takes up 75% of screen width
-    let padding = (width - quoteWidth) / 2; // Centering with padding
+    let quoteWidth = width * 0.75;
+    let padding = (width - quoteWidth) / 2;
 
     let words = quote.split(" ");
     let x = padding;
-    let y = 100; // Vertical position of the quote
-    let spacing = 12; // Letter spacing
-    let lineHeight = 35; // Space between lines
+    let y = 100;
+    let spacing = 12;
+    let lineHeight = 35;
 
     for (let i = 0; i < words.length; i++) {
         let wordWidth = textWidth(words[i] + " ");
-
         if (x + wordWidth > width - padding) {
-            x = padding; // Move to new line
+            x = padding;
             y += lineHeight;
         }
-
         for (let j = 0; j < words[i].length; j++) {
             letters.push(new Letter(x, y, words[i][j]));
-            x += spacing; // Letter spacing
+            x += spacing;
         }
-        
-        x += spacing; // Space after words
+        x += spacing;
     }
 }
 
 function draw() {
-    // black background 
-    background(0, 0, 0);  
+    background(0, 0, 0);
 
-    // Scale the background image correctly
     let imgRatio = bgImage.width / bgImage.height;
     let canvasRatio = width / height;
 
@@ -63,79 +60,84 @@ function draw() {
         newWidth = height * imgRatio;
     }
 
-    // Center the image
     let offsetX = (width - newWidth) / 2;
     let offsetY = (height - newHeight) / 2;
 
-    // opacity to the background image
     tint(255, 150);
     image(bgImage, offsetX, offsetY, newWidth, newHeight);
     noTint();
 
-    // Move umbrella
-    if (isRaining) {
-        umbrellaY -= 5; // Umbrella moves up
+    // Draw and update letters
+    for (let i = letters.length - 1; i >= 0; i--) {
+        letters[i].update();
+        letters[i].display();
+
+        let umbrellaTop = umbrellaY + 50;
+
+        if (letters[i].y >= umbrellaTop &&
+            letters[i].x >= umbrellaX - 250 &&
+            letters[i].x <= umbrellaX + 250) {
+            letters.splice(i, 1);
+        }
     }
 
-    // umbrella transparency
+    // Draw umbrella
     tint(255, 255);
     image(umbrella, umbrellaX - 300, umbrellaY, 600, 400);
     noTint();
-
-    // Draw letters
-    for (let i = 0; i < letters.length; i++) {
-        letters[i].update();
-        letters[i].display();
-    }
-
-    // Draw and update letters
-for (let i = letters.length - 1; i >= 0; i--) {
-    letters[i].update();
-    letters[i].display();
-
-    // Calculate the umbrella's top Y position
-    let umbrellaTop = umbrellaY + 50; // Adjust this value based on umbrella size
-
-    // Check if the letter is touching the umbrella
-    if (letters[i].y >= umbrellaTop &&  // Letter is at or below umbrella
-        letters[i].x >= umbrellaX - 250 &&  // Letter is within left edge
-        letters[i].x <= umbrellaX + 250) { // Letter is within right edge
-        letters.splice(i, 1); // Remove the letter
-    }
-}
-    
 }
 
+// ✅ Start rain when clicking the umbrella
 function mousePressed() {
-    // Only start rain if the umbrella is clicked
-    if (!isRaining && dist(mouseX, mouseY, umbrellaX, umbrellaY) < 75) {
+    let d = dist(mouseX, mouseY, umbrellaX, umbrellaY);
+    
+    if (!isRaining && d < 300) { 
         isRaining = true;
-
-        // Start making letters fall
         for (let letter of letters) {
             letter.falling = true;
         }
     }
+
+    // Enable dragging if clicking the umbrella
+    if (d < 300) { 
+        dragging = true;
+        offsetX = mouseX - umbrellaX;
+        offsetY = mouseY - umbrellaY;
+    }
 }
 
+// ✅ Allow dragging while rain continues
+function mouseDragged() {
+    if (dragging) {
+        umbrellaX = mouseX - offsetX;
+        umbrellaY = mouseY - offsetY;
+    }
+}
+
+// ✅ Stop dragging when releasing mouse
+function mouseReleased() {
+    dragging = false;
+}
+
+// ✅ Letter class for falling effect
 class Letter {
     constructor(x, y, letter) {
         this.x = x;
         this.y = y;
-        this.originalY = y; // Store the original position
+        this.originalY = y;
         this.letter = letter;
-        this.speed = random(2, 10); // letter fall speed
-        this.falling = false; // Initially not falling
+        this.speed = random(5, 18);
+        this.falling = false;
     }
 
     update() {
         if (this.falling) {
-            this.y += this.speed; // Letters fall when activated
+            this.y += this.speed;
         }
     }
 
     display() {
-        fill(207, 186, 176); // font color
+        fill(207, 186, 176);
         text(this.letter, this.x, this.y);
     }
 }
