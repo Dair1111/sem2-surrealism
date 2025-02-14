@@ -19,7 +19,7 @@
 
         /* Fan Image */
         .fan {
-            width: 150px;
+            width: 200px;
             position: absolute;
             bottom: 10%;
             left: 10%;
@@ -104,8 +104,8 @@
                 // Step 1: Initial Blow Out (Wind Effect)
                 document.querySelectorAll(".letters span").forEach((span, index) => {
                     let angle = Math.random() * 50 - 25; // Spread angle (-25 to +25 degrees)
-                    let distanceX = Math.random() * 400 + 100; // Move rightward (spread out)
-                    let distanceY = Math.random() * -300 - 50; // Move upwards (negative values)
+                    let distanceX = Math.random() * 500 + 100; // Move rightward (spread out)
+                    let distanceY = Math.random() * -500 - 50; // Move upwards (negative values)
 
                     // Delay each letter slightly for a cascading effect
                     span.style.transitionDelay = `${index * 0.02}s`;
