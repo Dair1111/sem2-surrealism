@@ -3,43 +3,52 @@ let quote = "Let yourself be carried along, events will not tolerate your interf
 let finalPositions = [];
 let isBlowing = false;
 let startTime;
-let font;
+let bgImage;
+
+// 🎯 FIX: Define fanX and fanY globally
+let fanX = 1200; // Move right
+let fanY = 400; // Move up
+
+// 🎯 FIX: Define letter starting position separately from the fan
+let letterStartX = fanX - 100;
+let letterStartY = fanY - 100; // Letters start slightly above the fan
+
+function preload() {
+    bgImage = loadImage("ben11.jpg");
+}
 
 function setup() {
-    createCanvas(800, 400);
+    createCanvas(windowWidth, windowHeight);
     textSize(18);
     textAlign(CENTER, CENTER);
 
-    // Define final positions for the quote
-    let startX = 150;
-    let startY = 200;
+    let startX = width / 4;
+    let startY = height / 2;
     let x = startX;
-    let y = startY;
+    let y = letterStartY;
 
     for (let i = 0; i < quote.length; i++) {
         if (quote[i] === " ") {
-            x += 10; // Space width
+            x += 10;
         }
         finalPositions.push({ x: x, y: y });
         x += 15;
-        if (x > width - 100) {
+        if (x > width - 200) {
             x = startX;
             y += 30;
         }
     }
 
-    // Initialize letters at fan position
     for (let i = 0; i < quote.length; i++) {
-        letters.push(new Letter(50, height - 50, finalPositions[i].x, finalPositions[i].y, quote[i]));
+        letters.push(new Letter(letterStartX, letterStartY, finalPositions[i].x, finalPositions[i].y, quote[i]));
     }
 }
 
 function draw() {
-    background(220);
-    
-    // Draw the fan
+    background(bgImage);
+
     fill(100);
-    ellipse(50, height - 50, 50, 50);
+    ellipse(fanX, fanY, 50, 50); // 🎯 FIX: Use the global fanX and fanY
 
     for (let i = 0; i < letters.length; i++) {
         letters[i].update();
@@ -48,7 +57,8 @@ function draw() {
 }
 
 function mousePressed() {
-    if (!isBlowing) {
+    let d = dist(mouseX, mouseY, fanX, fanY); // Check if click is near fan
+    if (!isBlowing && d < 30) { // Only activate if clicked close to the fan
         isBlowing = true;
         startTime = millis();
 
@@ -81,13 +91,11 @@ class Letter {
             let elapsed = millis() - startTime;
 
             if (elapsed < 5000) {
-                // Move letters outward and let them float
                 this.x += this.dx;
                 this.y += this.dy;
                 this.x += sin(frameCount * 0.05) * this.floatX;
                 this.y += cos(frameCount * 0.05) * this.floatY;
             } else {
-                // Move letters back to final position
                 this.x = lerp(this.x, this.targetX, 0.05);
                 this.y = lerp(this.y, this.targetY, 0.05);
             }
