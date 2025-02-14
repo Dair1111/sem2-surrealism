@@ -21,9 +21,10 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     textSize(18);
     textAlign(CENTER, CENTER);
+    textFont("Courier New"); // ✅ Set font to "Courier New", monospace
 
-    let startX = width / 4;
-    let startY = height / 2;
+    let startX = width / 2 - (quote.length * 7) / 2; // ✅ Center horizontally
+    let startY = height / 2 - 50; // ✅ Center vertically
     let x = startX;
     let y = letterStartY;
 
@@ -45,21 +46,26 @@ function setup() {
 }
 
 function draw() {
-    background(bgImage);
+    background(bgImage); // Set the background image
 
-    fill(100);
-    ellipse(fanX, fanY, 50, 50); // 🎯 FIX: Use the global fanX and fanY
-
-    for (let i = 0; i < letters.length; i++) {
-        letters[i].update();
-        letters[i].display();
+    if (!isBlowing) {
+        // Show "CLICK" only before animation starts
+        fill(255); // White text (change color if needed)
+        textSize(24);
+        text("CLICK", fanX, fanY);
+    } else {
+        // Show letters only after clicking "CLICK"
+        for (let i = 0; i < letters.length; i++) {
+            letters[i].update();
+            letters[i].display();
+        }
     }
 }
 
 function mousePressed() {
     let d = dist(mouseX, mouseY, fanX, fanY); // Check if click is near fan
     if (!isBlowing && d < 30) { // Only activate if clicked close to the fan
-        isBlowing = true;
+        isBlowing = true; // Hides "CLICK" and starts the letters
         startTime = millis();
 
         for (let i = 0; i < letters.length; i++) {
