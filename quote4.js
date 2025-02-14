@@ -7,6 +7,7 @@ let umbrellaY;
 let umbrellaX;
 let dragging = false; // Tracks if umbrella is being dragged
 let offsetX, offsetY; // Mouse offset when dragging
+let showClickText = true; // Controls the "Click Me" text visibility
 
 function preload() {
     bgImage = loadImage("ben1.jpg");
@@ -79,12 +80,21 @@ function draw() {
             letters[i].x <= umbrellaX + 250) {
             letters.splice(i, 1);
         }
+        
     }
 
     // Draw umbrella
     tint(255, 255);
     image(umbrella, umbrellaX - 300, umbrellaY, 600, 400);
     noTint();
+
+    // 🔹 Show "Click Me" text on the umbrella (before first click)
+    if (showClickText) {
+        fill(255, 255, 255);
+        textSize(18);
+        textAlign(CENTER, CENTER);
+        text("CLICK and DRAG", umbrellaX, umbrellaY + 130); // Positioning text on umbrella
+    }
 }
 
 // ✅ Start rain when clicking the umbrella
@@ -93,6 +103,7 @@ function mousePressed() {
     
     if (!isRaining && d < 300) { 
         isRaining = true;
+        showClickText = false; // 🔹 Hide text after first click
         for (let letter of letters) {
             letter.falling = true;
         }
