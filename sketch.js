@@ -5,22 +5,20 @@ let isBlowing = false;
 let startTime;
 let font;
 
-function preload() {
-    font = loadFont("https://cdnjs.cloudflare.com/ajax/libs/Roboto/2.138/Roboto-Regular.ttf");
-}
-
 function setup() {
-    createCanvas(600, 400);
-    angleMode(DEGREES);
+    createCanvas(800, 400);
+    textSize(18);
+    textAlign(CENTER, CENTER);
 
-    let startX = 100;
+    // Define final positions for the quote
+    let startX = 150;
     let startY = 200;
     let x = startX;
     let y = startY;
 
     for (let i = 0; i < quote.length; i++) {
         if (quote[i] === " ") {
-            x += 10;
+            x += 10; // Space width
         }
         finalPositions.push({ x: x, y: y });
         x += 15;
@@ -30,6 +28,7 @@ function setup() {
         }
     }
 
+    // Initialize letters at fan position
     for (let i = 0; i < quote.length; i++) {
         letters.push(new Letter(50, height - 50, finalPositions[i].x, finalPositions[i].y, quote[i]));
     }
@@ -37,6 +36,8 @@ function setup() {
 
 function draw() {
     background(220);
+    
+    // Draw the fan
     fill(100);
     ellipse(50, height - 50, 50, 50);
 
@@ -64,7 +65,6 @@ class Letter {
         this.targetX = targetX;
         this.targetY = targetY;
         this.letter = letter;
-        this.angle = random(360);
         this.dx = random(1, 5) * (random() > 0.5 ? 1 : -1);
         this.dy = random(-3, -1);
         this.floatX = random(-50, 50);
@@ -81,11 +81,13 @@ class Letter {
             let elapsed = millis() - startTime;
 
             if (elapsed < 5000) {
+                // Move letters outward and let them float
                 this.x += this.dx;
                 this.y += this.dy;
                 this.x += sin(frameCount * 0.05) * this.floatX;
                 this.y += cos(frameCount * 0.05) * this.floatY;
             } else {
+                // Move letters back to final position
                 this.x = lerp(this.x, this.targetX, 0.05);
                 this.y = lerp(this.y, this.targetY, 0.05);
             }
@@ -93,13 +95,7 @@ class Letter {
     }
 
     display() {
-        push();
-        translate(this.x, this.y);
-        rotate(this.angle);
-        textFont(font);
-        textSize(18);
         fill(0);
-        text(this.letter, 0, 0);
-        pop();
+        text(this.letter, this.x, this.y);
     }
 }
