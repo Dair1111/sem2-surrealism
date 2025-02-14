@@ -19,7 +19,7 @@ function preload() {
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    textSize(18);
+    textSize(28);
     textAlign(CENTER, CENTER);
     textFont("Courier New"); // ✅ Set font to "Courier New", monospace
 
@@ -96,7 +96,7 @@ class Letter {
         if (isBlowing) {
             let elapsed = millis() - startTime;
 
-            if (elapsed < 3000) {
+            if (elapsed < 2000) {
                 this.x += this.dx;
                 this.y += this.dy;
                 this.x += sin(frameCount * 0.05) * this.floatX;
@@ -104,6 +104,7 @@ class Letter {
             } else {
                 this.x = lerp(this.x, this.targetX, 0.05);
                 this.y = lerp(this.y, this.targetY, 0.05);
+                this.finalSize = 50; // Increase font size for the final quote
             }
         }
     }
@@ -119,4 +120,5 @@ class Letter {
         text(this.letter, this.x, this.y);
     }
 
+    
 }
