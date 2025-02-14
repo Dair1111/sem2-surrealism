@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blowing Wind Effect</title>
+    <style>
+        body {
+            font-family: "Courier New", monospace;
+            background: linear-gradient(to bottom, #d9e6f2, #f7d4e3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Fan Image */
+        .fan {
+            width: 150px;
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            cursor: pointer;
+        }
+
+        /* Container for Letters */
+        .letters {
+            position: absolute;
+            font-size: 18px;
+            width: 20%;
+            height: 300px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            visibility: hidden;
+        }
+
+        /* Individual Letters */
+        .letters span {
+            position: absolute;
+            transition: transform 2s ease-out, opacity 5s ease-out;
+            opacity: 0;
+            font-weight: lighter;
+        }
+
+        /* Final Quote */
+        .final-quote {
+            position: absolute;
+            font-size: 1.5em;
+            color: rgb(98, 112, 165);
+            font-weight: lighter;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            text-align: left;
+            line-height: 1.5;
+            width: 75%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: none;
+            padding: 20px;
+            z-index: 1;
+        }
+            
+    </style>
+</head>
+<body>
+    
+    <img src="fan.png" class="fan" id="fan" alt="Fan">
+
+    <!-- Letters that will be blown -->
+    <div class="letters" id="letters"></div>
+
+    <!-- Final Quote -->
+    <div class="final-quote" id="finalQuote">
+        "Let yourself be carried along, events will not tolerate your interference. <br>
+        You are nameless. The ease of everything is priceless."
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const fan = document.getElementById("fan");
+            const lettersContainer = document.getElementById("letters");
+            const finalQuote = document.getElementById("finalQuote");
+            const quote = "Let yourself be carried along, events will not tolerate your interference. You are nameless. The ease of everything is priceless.";
+
+            // Create letter elements
+            quote.split("").forEach((char, index) => {
+                let span = document.createElement("span");
+                span.innerText = char;
+
+                // Initial position: Start from the fan position (bottom left)
+                span.style.left = `10%`;
+                span.style.top = `85%`;
+
+                lettersContainer.appendChild(span);
+            });
+
+            fan.addEventListener("click", () => {
+                lettersContainer.style.visibility = "visible";
+
+                // Step 1: Initial Blow Out (Wind Effect)
+                document.querySelectorAll(".letters span").forEach((span, index) => {
+                    let angle = Math.random() * 50 - 25; // Spread angle (-25 to +25 degrees)
+                    let distanceX = Math.random() * 400 + 100; // Move rightward (spread out)
+                    let distanceY = Math.random() * -300 - 50; // Move upwards (negative values)
+
+                    // Delay each letter slightly for a cascading effect
+                    span.style.transitionDelay = `${index * 0.02}s`;
+                    
+                    span.style.transform = `translate(${distanceX}px, ${distanceY}px) rotate(${angle}deg)`;
+                    span.style.opacity = "1";
+                });
+
+                // Step 2: Float Randomly for 5 seconds
+                setTimeout(() => {
+                    document.querySelectorAll(".letters span").forEach((span, index) => {
+                        let floatX = (Math.random() - 0.5) * 600; // Spread further in X
+                        let floatY = (Math.random() - 0.5) * 500; // Spread further in Y
+
+                        span.style.transition = "4s ease-in-out";
+                        span.style.transform = `translate(${floatX}px, ${floatY}px) rotate(${Math.random() * 360}deg)`;
+                    });
+                }, 2000);
+
+                // Step 3: Reassemble into the final quote
+                setTimeout(() => {
+                    document.querySelectorAll(".letters span").forEach((span, index) => {
+                        span.style.transition = "2s ease-in-out";
+                        span.style.transform = `translate(0, 0) rotate(0deg)`;
+                    });
+
+                    setTimeout(() => {
+                        lettersContainer.style.visibility = "hidden";
+                        finalQuote.style.opacity = "1"; // Show final quote
+                    }, 2000);
+
+                }, 7000); // Wait for 5 seconds of floating before reassembling
+            });
+        });
+    </script>
+
+</body>
+</html>
