@@ -5,10 +5,13 @@ let isBlowing = false;
 let startTime;
 let font;
 
+function preload() {
+    font = loadFont("https://cdnjs.cloudflare.com/ajax/libs/Roboto/2.138/Roboto-Regular.ttf");
+}
+
 function setup() {
     createCanvas(600, 400);
     angleMode(DEGREES);
-    textFont("monospace"); // Use built-in font (no need to load)
 
     let startX = 100;
     let startY = 200;
