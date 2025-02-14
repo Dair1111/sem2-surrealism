@@ -23,8 +23,8 @@ function setup() {
     textAlign(CENTER, CENTER);
     textFont("Courier New"); // ✅ Set font to "Courier New", monospace
 
-    let startX = width / 2 - (quote.length * 7) / 2; // ✅ Center horizontally
-    let startY = height / 2 - 50; // ✅ Center vertically
+    let startX = (width - quote.length * 10) / 2; // Centered horizontally
+    let startY = (height / 2) - 50; // Move slightly up to center multiple lines
     let x = startX;
     let y = letterStartY;
 
@@ -96,7 +96,7 @@ class Letter {
         if (isBlowing) {
             let elapsed = millis() - startTime;
 
-            if (elapsed < 5000) {
+            if (elapsed < 3000) {
                 this.x += this.dx;
                 this.y += this.dy;
                 this.x += sin(frameCount * 0.05) * this.floatX;
@@ -109,7 +109,14 @@ class Letter {
     }
 
     display() {
-        fill(0);
+        let elapsed = millis() - startTime;
+        let t = map(elapsed, 0, 3000, 0, 1); // Normalize time from 0 to 1
+        t = constrain(t, 0, 1); // Ensure t doesn't go beyond 1
+    
+        let colorTransition = lerpColor(color(255, 222, 232), color(0, 21, 112), t); // Red to Blue
+        fill(colorTransition);
+        
         text(this.letter, this.x, this.y);
     }
+
 }
