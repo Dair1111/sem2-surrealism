@@ -1,83 +1,154 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>project1</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1</title>
     <style>
-      /* Black background */
-      body {
-        background-color: black;
-        text-align: center;
-        position: relative;
-      }
+        /* Black background */
+        body {
+            background-color: black;
+            text-align: center;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
 
-      /* Background image with opacity */
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('ben17.jpg') no-repeat center center;
-        background-size: cover;
-        opacity: 0.6; /* 60% opacity */
-        z-index: -1; /* Ensures it stays behind content */
-      }
+        /* Background image with opacity */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('ben17.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: 0.6; /* 60% opacity */
+            z-index: -1; /* Ensures it stays behind content */
+        }
 
-      /* About page link in the top right */
-      .about-link {
-        position: absolute;
-        top: 20px;
-        right: 40px;
-        font-size: 18px;
-        font-family: "Courier New", monospace;
-        color: white;
-        text-decoration: none;
-        padding: 10px 15px;
-        background-color: rgba(0, 138, 111, 0.5); /* Slightly transparent background */
-        border-radius: 5px;
-      }
+        /* About page link in the top right */
+        .about-link {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 18px;
+            font-family: "Courier New", monospace;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: rgba(0, 138, 111, 0.5); /* Slightly transparent background */
+            border-radius: 5px;
+        }
 
-      .about-link:hover {
-        background-color: rgba(0, 0, 0, 0.8); /* Darker on hover */
-      }
+        .about-link:hover {
+            background-color: rgba(0, 0, 0, 0.8); /* Darker on hover */
+        }
 
-      h1 {
-        color: rgb(255, 255, 255);
-        font-size: 3em;
-        font-weight: lighter;
-        font-family: "Courier New", monospace;
-        text-align: center;
-        padding-top: 1.6em;
-      }
+        h1 {
+            color: rgb(255, 255, 255);
+            font-size: 3em;
+            font-weight: lighter;
+            font-family: "Courier New", monospace;
+            text-align: center;
+            padding-top: 1.2em;
+        }
 
-      a {
-        color: #ffffff8c;
-        font-size: 20px;
-        font-family: "Courier New", monospace;
-      }
+        /* Container for quote images */
+        .quote-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allows images to wrap on smaller screens */
+            gap: 20px; /* Space between images */
+            margin: 30px auto;
+            padding: 10px;
+            max-width: 90%;
+        }
+
+        .quote-container a {
+            display: inline-block;
+        }
+
+        .quote-container img {
+            width: 200px; /* Default width for large screens */
+            max-width: 100%; /* Ensures images don't overflow */
+            height: auto;
+            border-radius: 10px; /* Rounded corners */
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .quote-container img:hover {
+            transform: scale(1.1); /* Slight zoom effect on hover */
+            opacity: 0.8; /* Slight transparency on hover */
+        }
+
+        /* 📌 Mobile-friendly adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em; /* Reduce title size on mobile */
+                padding-top: 1em;
+            }
+
+            .about-link {
+                top: 10px;
+                right: 20px;
+                font-size: 16px;
+                padding: 8px 12px;
+            }
+
+            .quote-container {
+                flex-direction: column; /* Stack images vertically on small screens */
+                align-items: center;
+            }
+
+            .quote-container img {
+                width: 80%; /* Images take up more space on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .about-link {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+
+            .quote-container img {
+                width: 90%; /* Make images larger for small screens */
+            }
+        }
+
     </style>
-  </head>
+</head>
 <body>
-  <!-- About page link in top right -->
-  <a href="about.html" class="about-link">Full Text</a>
 
-  <h1>MANIFESTO OF SURREALISM</h1>
-  <p>
-    <a href="quote1.html">Quote 1</a>
-   </p>
+    <!-- About page link in top right -->
+    <a href="about.html" class="about-link">Full Text</a>
 
-   <p>
-    <a href="quote2.html">Quote 2</a>
-   </p>
+    <h1>MANIFESTO OF SURREALISM</h1>
 
-   <p>
-    <a href="quote3.html">Quote 3</a>
-   </p>
+    <!-- Quote Images as Clickable Links -->
+    <div class="quote-container">
+        <a href="quote1.html">
+            <img src="jie.png" alt="Quote 1">
+        </a>
 
-   <p>
-    <a href="quote4.html">Quote 4</a>
-   </p>
+        <a href="quote2.html">
+            <img src="pipe.png" alt="Quote 2">
+        </a>
+
+        <a href="quote3.html">
+            <img src="fan.png" alt="Quote 3">
+        </a>
+
+        <a href="quote4.html">
+            <img src="umbrella.png" alt="Quote 4">
+        </a>
+    </div>
 
 </body>
 </html>
