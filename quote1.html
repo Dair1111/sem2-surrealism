@@ -80,6 +80,32 @@
             }
         }
 
+         /* Styling for navigation arrows */
+         .arrow {
+            position: fixed;
+            top: 50%;
+            font-size: 2em;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            transform: translateY(-50%);
+        }
+
+        .arrow-left {
+            left: 20px; /* Position left arrow */
+        }
+
+        .arrow-right {
+            right: 20px; /* Position right arrow */
+        }
+
+        .arrow:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+
     </style>
 </head>
 <body>
@@ -87,6 +113,10 @@
     <div class="background"></div> <!-- Added background div -->
 
     <p class="chaotic-text"></p>
+
+     <!-- Navigation Arrows -->
+     <a href="quote4.html" class="arrow arrow-left">&#8592;</a>
+     <a href="quote2.html" class="arrow arrow-right">&#8594;</a>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
