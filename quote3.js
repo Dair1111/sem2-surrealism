@@ -5,13 +5,19 @@ let isBlowing = false;
 let startTime;
 let bgImage;
 
-// 🎯 FIX: Define fanX and fanY globally
-let fanX = 1200; // Move right
-let fanY = 400; // Move up
+// 🎯 Define fan position
+let fanX = 1200; // Original right position
+let fanY = 400; // Original up position
 
-// 🎯 FIX: Define letter starting position separately from the fan
+// 🎯 Adjust "CLICK" position
+let clickOffsetX = -100; // Move Left
+let clickOffsetY = 50;   // Move Down
+let clickX = fanX + clickOffsetX;
+let clickY = fanY + clickOffsetY;
+
+// 🎯 Define letter starting position separately from the fan
 let letterStartX = fanX - 100;
-let letterStartY = fanY - 100; // Letters start slightly above the fan
+let letterStartY = fanY - 100;
 
 function preload() {
     bgImage = loadImage("ben11.jpg");
@@ -21,10 +27,10 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     textSize(28);
     textAlign(CENTER, CENTER);
-    textFont("Courier New"); // ✅ Set font to "Courier New", monospace
+    textFont("Courier New");
 
-    let startX = (width - quote.length * 10) / 2; // Centered horizontally
-    let startY = (height / 2) - 50; // Move slightly up to center multiple lines
+    let startX = (width - quote.length * 10) / 2;
+    let startY = (height / 2) - 50;
     let x = startX;
     let y = letterStartY;
 
@@ -46,19 +52,15 @@ function setup() {
 }
 
 function draw() {
-    background(bgImage); // Set the background image
+    background(bgImage);
 
     if (!isBlowing) {
-        // Show "CLICK" only before animation starts
-        fill(255); // White text (change color if needed)
+        // Show "CLICK" in the new position
+        fill(255);
         textSize(24);
-        
-        let clickOffsetX = -90; // Move Left
-        let clickOffsetY = 80;   // Move Down
-        text("CLICK", fanX + clickOffsetX, fanY + clickOffsetY);
-
+        text("CLICK", clickX, clickY);
     } else {
-        // Show letters only after clicking "CLICK"
+        // Show letters after clicking
         for (let i = 0; i < letters.length; i++) {
             letters[i].update();
             letters[i].display();
@@ -67,9 +69,9 @@ function draw() {
 }
 
 function mousePressed() {
-    let d = dist(mouseX, mouseY, fanX, fanY); // Check if click is near fan
-    if (!isBlowing && d < 30) { // Only activate if clicked close to the fan
-        isBlowing = true; // Hides "CLICK" and starts the letters
+    let d = dist(mouseX, mouseY, clickX, clickY); // ✅ Updated click detection area
+    if (!isBlowing && d < 30) { // Activate if clicked near "CLICK"
+        isBlowing = true;
         startTime = millis();
 
         for (let i = 0; i < letters.length; i++) {
@@ -108,21 +110,19 @@ class Letter {
             } else {
                 this.x = lerp(this.x, this.targetX, 0.05);
                 this.y = lerp(this.y, this.targetY, 0.05);
-                this.finalSize = 50; // Increase font size for the final quote
+                this.finalSize = 50;
             }
         }
     }
 
     display() {
         let elapsed = millis() - startTime;
-        let t = map(elapsed, 0, 3000, 0, 1); // Normalize time from 0 to 1
-        t = constrain(t, 0, 1); // Ensure t doesn't go beyond 1
-    
-        let colorTransition = lerpColor(color(255, 222, 232), color(0, 21, 112), t); // Red to Blue
+        let t = map(elapsed, 0, 3000, 0, 1);
+        t = constrain(t, 0, 1);
+
+        let colorTransition = lerpColor(color(255, 222, 232), color(0, 21, 112), t);
         fill(colorTransition);
-        
+
         text(this.letter, this.x, this.y);
     }
-
- 
 }
