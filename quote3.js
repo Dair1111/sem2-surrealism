@@ -52,7 +52,11 @@ function draw() {
         // Show "CLICK" only before animation starts
         fill(255); // White text (change color if needed)
         textSize(24);
-        text("CLICK", fanX, fanY);
+        
+        let clickOffsetX = -100; // Move Left
+        let clickOffsetY = 100;   // Move Down
+        text("CLICK", fanX + clickOffsetX, fanY + clickOffsetY);
+
     } else {
         // Show letters only after clicking "CLICK"
         for (let i = 0; i < letters.length; i++) {
