@@ -34,6 +34,23 @@
             z-index: -1;
         }
 
+        .about-link {
+        position: absolute;
+        top: 20px;
+        left: 40px;
+        font-size: 18px;
+        font-family: "Courier New", monospace;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        background-color: rgba(0, 138, 111, 0.5); /* Slightly transparent background */
+        border-radius: 5px;
+      }
+
+      .about-link:hover {
+        background-color: rgba(216, 114, 121, 0.63); /* Darker on hover */
+      }
+
         .chaotic-text {
             position: relative;
             cursor: pointer;
@@ -113,6 +130,8 @@
     <div class="background"></div> <!-- Added background div -->
 
     <p class="chaotic-text"></p>
+
+    <a href="index.html" class="about-link">Home</a>
 
      <!-- Navigation Arrows -->
      <a href="quote4.html" class="arrow arrow-left">&#8592;</a>
