@@ -38,6 +38,23 @@
             z-index: -1; 
         }
 
+        .about-link {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        font-size: 18px;
+        font-family: "Courier New", monospace;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        background-color: rgba(172, 144, 218, 0.5); /* Slightly transparent background */
+        border-radius: 5px;
+      }
+
+      .about-link:hover {
+        background-color: rgba(212, 102, 38, 0.63); /* Darker on hover */
+      }
+
         .text-container {
              position: relative;
              cursor: pointer;
@@ -129,6 +146,8 @@
 <body>
 
     <div class="background"></div>
+
+    <a href="index.html" class="about-link">Home</a>
 
     <div class="text-container" id="text">
         It is not the fear of madness which will oblige us to leave the flag of imagination furled.
