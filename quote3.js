@@ -53,8 +53,8 @@ function draw() {
         fill(255); // White text (change color if needed)
         textSize(24);
         
-        let clickOffsetX = -100; // Move Left
-        let clickOffsetY = 100;   // Move Down
+        let clickOffsetX = -90; // Move Left
+        let clickOffsetY = 80;   // Move Down
         text("CLICK", fanX + clickOffsetX, fanY + clickOffsetY);
 
     } else {
