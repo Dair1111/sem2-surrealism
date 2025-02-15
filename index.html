@@ -3,10 +3,45 @@
   <head>
     <title>project1</title>
     <style>
-      body{
-        background-color: #c3b9a6b3;
+      /* Black background */
+      body {
+        background-color: black;
         text-align: center;
+        position: relative;
       }
+
+      /* Background image with opacity */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('ben17.jpg') no-repeat center center;
+        background-size: cover;
+        opacity: 0.6; /* 60% opacity */
+        z-index: -1; /* Ensures it stays behind content */
+      }
+
+      /* About page link in the top right */
+      .about-link {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 18px;
+        font-family: "Courier New", monospace;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        background-color: rgba(0, 0, 0, 0.5); /* Slightly transparent background */
+        border-radius: 5px;
+      }
+
+      .about-link:hover {
+        background-color: rgba(0, 0, 0, 0.8); /* Darker on hover */
+      }
+
       h1 {
         color: rgb(110, 26, 26);
         font-size: 3em;
@@ -24,6 +59,9 @@
     </style>
   </head>
 <body>
+  <!-- About page link in top right -->
+  <a href="about.html" class="about-link">About</a>
+  
   <h1>MANIFESTO OF SURREALISM</h1>
   <p>
     <a href="quote1.html">Quote 1</a>
