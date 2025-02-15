@@ -8,12 +8,48 @@
     <script src="quote3.js" defer></script>
     <style>
         html, body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Prevent scrolling */
+            font-family: "Courier New", monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: rgb(230, 255, 176);
+            background-color: rgb(0, 0, 0);
         }
+        
+        /* Styling for navigation arrows */
+        .arrow {
+            position: fixed;
+            top: 50%;
+            font-size: 2em;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            transform: translateY(-50%);
+        }
+
+        .arrow-left {
+            left: 20px; /* Position left arrow */
+        }
+
+        .arrow-right {
+            right: 20px; /* Position right arrow */
+        }
+
+        .arrow:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+
     </style>
 </head>
 <body>
+    <!-- Navigation Arrows -->
+    <a href="quote2.html" class="arrow arrow-left">&#8592;</a>
+    <a href="quote4.html" class="arrow arrow-right">&#8594;</a>
 </body>
 </html>
