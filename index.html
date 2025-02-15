@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1</title>
     <style>
-        /* Black background */
         body {
             background-color: black;
             text-align: center;
@@ -15,7 +14,6 @@
             overflow: hidden;
         }
 
-        /* Background image */
         .background {
             position: fixed;
             top: 0;
@@ -28,7 +26,6 @@
             z-index: -1;
         }
 
-        /* About page link in the top right */
         .about-link {
             position: absolute;
             top: 20px;
@@ -55,32 +52,13 @@
             padding-top: 1.2em;
         }
 
-        /* Rotating objects */
         .object {
             position: absolute;
-            width: 300px; /* 🔹 Increased object size */
             height: auto;
             transform: translate(-50%, -50%);
-            transition: transform 0.2s ease-out;
+            transition: transform 0.2s ease-out, width 0.3s ease-out;
         }
 
-        #obj4 { width: 220px; }
-        #obj1 { width: 340px; }
-
-        /* 📌 Mobile-friendly adjustments */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2em;
-            }
-
-            .about-link {
-                top: 10px;
-                right: 20px;
-                font-size: 16px;
-                padding: 8px 12px;
-            }
-
-        }
     </style>
 </head>
 
@@ -97,17 +75,35 @@
     
 
     <script>
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const radius = 300; // rotation radius
+        let centerX, centerY;
+        let baseSize = 300;
+        let radius = 300; // Rotation radius
 
         let angle1 = 0;
         let angle2 = Math.PI / 2;
         let angle3 = Math.PI;
         let angle4 = (3 * Math.PI) / 2;
-        const speed = 0.003; // rotation speed
+        const speed = 0.003; // Rotation speed
+
+        function updateCenter() {
+            centerX = window.innerWidth / 2;
+            centerY = window.innerHeight / 2;
+
+            // Adjust size based on screen width
+            let scaleFactor = Math.min(window.innerWidth / 1200, 1); // Scale down when width smaller
+            let newSize = baseSize * scaleFactor;
+
+            document.getElementById("obj1").style.width = `${newSize}px`; 
+            document.getElementById("obj2").style.width = `${newSize * 0.8}px`; 
+            document.getElementById("obj3").style.width = `${newSize * 0.9}px`; 
+            document.getElementById("obj4").style.width = `${newSize * 0.7}px`; 
+
+            radius = 300 * scaleFactor; // Reduce rotation radius on smaller screens
+        }
 
         function rotateObjects() {
+            updateCenter(); 
+
             document.getElementById("obj1").style.left = `${centerX + radius * Math.cos(angle1)}px`;
             document.getElementById("obj1").style.top = `${centerY + radius * Math.sin(angle1)}px`;
 
@@ -120,7 +116,7 @@
             document.getElementById("obj4").style.left = `${centerX + radius * Math.cos(angle4)}px`;
             document.getElementById("obj4").style.top = `${centerY + radius * Math.sin(angle4)}px`;
 
-            // Increase angles for continuous rotation
+
             angle1 += speed;
             angle2 += speed;
             angle3 += speed;
@@ -129,6 +125,9 @@
             requestAnimationFrame(rotateObjects);
         }
 
+        window.addEventListener("resize", updateCenter);
+
+        updateCenter();
         rotateObjects(); 
     </script>
 
