@@ -17,14 +17,12 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: center;
             padding: 20px;
             overflow: hidden;
             position: relative;
             color: rgb(230, 255, 176); 
             background-color: rgb(0, 0, 0); 
         }
-
 
         .background {
             position: absolute;
@@ -39,35 +37,38 @@
         }
 
         .about-link {
-        position: absolute;
-        top: 40px;
-        left: 40px;
-        font-size: 18px;
-        font-family: "Courier New", monospace;
-        color: white;
-        text-decoration: none;
-        padding: 10px 15px;
-        background-color: rgba(172, 144, 218, 0.5); /* Slightly transparent background */
-        border-radius: 5px;
-      }
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            font-size: 18px;
+            font-family: "Courier New", monospace;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: rgba(172, 144, 218, 0.5); /* Slightly transparent background */
+            border-radius: 5px;
+        }
 
-      .about-link:hover {
-        background-color: rgba(212, 102, 38, 0.63); /* Darker on hover */
-      }
+        .about-link:hover {
+            background-color: rgba(212, 102, 38, 0.63);
+        }
 
+        /* 🎯 Adjusted Quote Position & Left Alignment */
         .text-container {
-             position: relative;
-             cursor: pointer;
-             z-index: 1;
-             font-size: 1.7em;
-             max-width: 75%; 
-             word-wrap: break-word; 
-             overflow-wrap: break-word;
-             padding: 2em 4em 9em 8em;
-             text-align: center;
-             line-height: 1.4;
-             transform: rotate(5deg); 
-            }
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+            font-size: 1.7em;
+            max-width: 75%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            padding: 2em 4em;
+            text-align: left; /* Align text to the left */
+            line-height: 1.4;
+            transform: rotate(5deg);
+            margin-top: -180px;  /* Moves UP more */
+            margin-left: 200px;  /* Moves RIGHT more */
+        }
 
         .text-container span {
             display: inline-block;
@@ -79,7 +80,6 @@
         .text-container span.drop {
             animation: fall 1s ease-out forwards;
         }
-        
 
         @keyframes fall {
             0% {
@@ -109,11 +109,10 @@
                 transform: translateY(120px) rotate(720deg);
                 opacity: 0;
             }
-
-            .text-container span:hover {
-            color: red; /* Changes color temporarily */
         }
-        
+
+        .text-container span:hover {
+            color: inherit; 
         }
 
         /* Styling for navigation arrows */
@@ -130,15 +129,51 @@
         }
 
         .arrow-left {
-            left: 20px; /* Position left arrow */
+            left: 20px;
         }
 
         .arrow-right {
-            right: 20px; /* Position right arrow */
+            right: 20px;
         }
 
         .arrow:hover {
             background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 📌 Responsive adjustments */
+        @media (max-width: 1024px) {
+            .text-container {
+                font-size: 1.5em;
+                margin-top: -100px;
+                margin-left: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .text-container {
+                font-size: 1.3em;
+                margin-top: -80px;
+                margin-left: 40px;
+            }
+
+            .about-link {
+                font-size: 16px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .text-container {
+                font-size: 1.1em;
+                margin-top: -60px;
+                margin-left: 20px;
+                padding: 1em 2em;
+            }
+
+            .about-link {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
         }
 
     </style>
@@ -153,9 +188,9 @@
         It is not the fear of madness which will oblige us to leave the flag of imagination furled.
     </div>
 
-     <!-- Navigation Arrows -->
-     <a href="quote1.html" class="arrow arrow-left">&#8592;</a>
-     <a href="quote3.html" class="arrow arrow-right">&#8594;</a>
+    <!-- Navigation Arrows -->
+    <a href="quote1.html" class="arrow arrow-left">&#8592;</a>
+    <a href="quote3.html" class="arrow arrow-right">&#8594;</a>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -177,7 +212,7 @@
                     } else {
                         event.target.classList.add("chaos");
                     }
-                    
+
                     setTimeout(() => {
                         event.target.classList.remove("drop");
                         event.target.classList.remove("chaos");
@@ -188,3 +223,4 @@
     </script>
 
 </body>
+</html>
