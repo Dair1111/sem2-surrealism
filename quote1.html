@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>quote 1</title>
+    <title>Quote 1</title>
     <style>
-         * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -19,9 +20,10 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
-            background: rgb(0, 0, 0)
+            background: black;
         }
 
+        /* Background image */
         .background {
             position: fixed;
             top: 0;
@@ -34,36 +36,63 @@
             z-index: -1;
         }
 
+        /* Home button */
         .about-link {
-        position: absolute;
-        top: 40px;
-        left: 40px;
-        font-size: 18px;
-        font-family: "Courier New", monospace;
-        color: white;
-        text-decoration: none;
-        padding: 10px 15px;
-        background-color: rgba(0, 138, 111, 0.5); /* Slightly transparent background */
-        border-radius: 5px;
-      }
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            font-family: "Courier New", monospace;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: rgba(0, 138, 55, 0.5);
+            border-radius: 5px;
+        }
 
-      .about-link:hover {
-        background-color: rgba(216, 114, 121, 0.63); /* Darker on hover */
-      }
+        .about-link:hover {
+            background-color: rgba(216, 114, 121, 0.63);
+        }
 
+        /* Quote text */
         .chaotic-text {
             position: relative;
             cursor: pointer;
             z-index: 1;
-            max-width: 75%;
+            max-width: 70%;
             word-wrap: break-word;
             overflow-wrap: break-word;
             hyphens: none;
-            padding: 2em 2em 8em;
+            padding: 1em 2em;
             text-align: left;
             line-height: 1.5;
             font-size: 1.5em;
             color: rgb(124, 138, 189);
+        }
+
+        /* Adjust text for smaller screens */
+        @media (max-width: 1024px) {
+            .chaotic-text {
+                font-size: 1.4em;
+                max-width: 80%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .chaotic-text {
+                font-size: 1.2em;
+                max-width: 90%;
+                padding: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chaotic-text {
+                font-size: 1.1em;
+                max-width: 95%;
+                padding: 0.5em;
+                text-align: center; /* Center align for better readability */
+            }
         }
 
         .chaotic-text span {
@@ -84,12 +113,8 @@
                 opacity: 1;
             }
             30% {
-                transform: translate(calc(50vw * (Math.random() - 0.5)), calc(50vh * (Math.random() - 0.5))) rotate(720deg);
-                opacity: 0.2;
-            }
-            60% {
-                transform: translate(calc(-50vw * (Math.random() - 0.5)), calc(-50vh * (Math.random() - 0.5))) rotate(-720deg);
-                opacity: 0;
+                transform: translate(calc(30vw * (Math.random() - 0.5)), calc(30vh * (Math.random() - 0.5))) rotate(360deg);
+                opacity: 0.3;
             }
             100% {
                 transform: translate(0, 0);
@@ -97,8 +122,8 @@
             }
         }
 
-         /* Styling for navigation arrows */
-         .arrow {
+        /* Navigation arrows */
+        .arrow {
             position: fixed;
             top: 50%;
             font-size: 2em;
@@ -111,23 +136,36 @@
         }
 
         .arrow-left {
-            left: 20px; /* Position left arrow */
+            left: 20px;
         }
 
         .arrow-right {
-            right: 20px; /* Position right arrow */
+            right: 20px;
         }
 
         .arrow:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
+        /* Make arrows & home button easier to tap on mobile */
+        @media (max-width: 600px) {
+            .arrow {
+                font-size: 1.5em;
+                padding: 8px;
+            }
+            .about-link {
+                font-size: 14px;
+                padding: 8px;
+                top: 10px;
+                left: 10px;
+            }
+        }
 
     </style>
 </head>
 <body>
 
-    <div class="background"></div> <!-- Added background div -->
+    <div class="background"></div>
 
     <p class="chaotic-text"></p>
 
@@ -155,10 +193,10 @@
                 letter.addEventListener("mouseover", () => {
                     if (Math.random() > 0.5) {
                         letter.classList.add("chaos");
-                        setTimeout(() => letter.classList.remove("chaos"), 2000);
+                        setTimeout(() => letter.classList.remove("chaos"), 1500);
                     } else {
                         letter.style.opacity = "0";
-                        setTimeout(() => letter.style.opacity = "1", 2000);
+                        setTimeout(() => letter.style.opacity = "1", 1500);
                     }
                 });
             });
